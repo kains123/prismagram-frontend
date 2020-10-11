@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Input from "../Components/Input";
-import Button from "../Components/Button";
-import useInput from "../Hooks/useInput";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
+
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -47,34 +47,39 @@ const Form = styled(Box)`
   }
 `;
 
-
-export default () => {
-    const [action, setAction] = useState("logIn");
-    const username = useInput("");
-    const password = useInput("");
-    const firstName = useInput("");
-    const lastName = useInput("");
-    const email = useInput("");
-
-    return (
+export default ({
+    action,
+    name,
+    firstName,
+    lastName,
+    email,
+    setAction,
+    onSubmit,
+    secret
+}) => (
         <Wrapper>
             <Form>
-                {action === "logIn" ? (
-                    <form>
-                        <Input placeholder={"Username"} {...username} />
-                        <Input placeholder={"Password"} {...password} type="password" />
+                {action === "logIn" && (
+                    <form onSubmit={onSubmit}>
+                        <Input placeholder={"Email"} {...email} type="email" />
                         <Button text={"Log in"} />
                     </form>
-                ) : (
-                        <form>
-                            <Input placeholder={"First name"} {...firstName} />
-                            <Input placeholder={"Last name"} {...lastName} />
-                            <Input placeholder={"Email"} {...email} type="email" />
-                            <Input placeholder={"Username"} {...username} />
-                            <Input placeholder={"Password"} {...password} type="password" />
-                            <Button text={"Sign up"} />
-                        </form>
-                    )}
+                )}
+                {action === "signUp" && (
+                    <form onSubmit={onSubmit}>
+                        <Input placeholder={"First name"} {...firstName} />
+                        <Input placeholder={"Last name"} {...lastName} />
+                        <Input placeholder={"Email"} {...email} type="email" />
+                        <Input placeholder={"Username"} {...name} />
+                        <Button text={"Sign up"} />
+                    </form>
+                )}
+                {action === "confirm" && (
+                    <form onSubmit={onSubmit}>
+                        <Input placeholder="Paste your secret" required {...secret} />
+                        <Button text={"Confirm"} />
+                    </form>
+                )}
             </Form>
             <StateChanger>
                 {action === "logIn" ? (
@@ -91,4 +96,3 @@ export default () => {
             </StateChanger>
         </Wrapper>
     );
-};
