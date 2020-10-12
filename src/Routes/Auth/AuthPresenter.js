@@ -1,4 +1,5 @@
 import React from "react";
+import Helmet from "react-helmet";
 import styled from "styled-components";
 import Input from "../../Components/Input";
 import Button from "../../Components/Button";
@@ -60,10 +61,15 @@ export default ({
         <Wrapper>
             <Form>
                 {action === "logIn" && (
-                    <form onSubmit={onSubmit}>
-                        <Input placeholder={"Email"} {...email} type="email" />
-                        <Button text={"Log in"} />
-                    </form>
+                <>
+                <Helmet>
+                  <title>Log In | Prismagram</title>
+                </Helmet>
+                <form onSubmit={onSubmit}>
+                  <Input placeholder={"Email"} {...email} type="email" />
+                  <Button text={"Log in"} />
+                </form>
+              </>
                 )}
                 {action === "signUp" && (
                     <form onSubmit={onSubmit}>
